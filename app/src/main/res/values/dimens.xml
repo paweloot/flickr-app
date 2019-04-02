@@ -8,6 +8,10 @@
     <dimen name="fkr_font_small">12sp</dimen>
 
     <!-- Typical spacing -->
+    <dimen name="fkr_layout_margin_top">8dp</dimen>
+    <dimen name="fkr_layout_margin_bottom">8dp</dimen>
+    <dimen name="fkr_layout_margin_start_end">8dp</dimen>
+
     <dimen name="fkr_spacing_huge">40dp</dimen>
     <dimen name="fkr_spacing_large">24dp</dimen>
     <dimen name="fkr_spacing_normal">16dp</dimen>
