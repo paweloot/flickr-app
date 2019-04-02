@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Font sizes -->
+    <dimen name="fkr_font_huge">48sp</dimen>
+    <dimen name="fkr_font_larger">28sp</dimen>
+    <dimen name="fkr_font_large">18sp</dimen>
+    <dimen name="fkr_font_normal">14sp</dimen>
+    <dimen name="fkr_font_small">12sp</dimen>
+
+    <!-- Typical spacing -->
+    <dimen name="fkr_spacing_huge">40dp</dimen>
+    <dimen name="fkr_spacing_large">24dp</dimen>
+    <dimen name="fkr_spacing_normal">16dp</dimen>
+    <dimen name="fkr_spacing_small">8dp</dimen>
+    <dimen name="fkr_spacing_tiny">4dp</dimen>
+
+    <!-- Other elements sizes -->
+    <dimen name="fkr_list_divider_height">1dp</dimen>
+</resources>
