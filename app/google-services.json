@@ -1,0 +1,35 @@
+{
+  "project_info": {
+    "project_number": "577072153893",
+    "firebase_url": "https://flickr-f86ad.firebaseio.com",
+    "project_id": "flickr-f86ad",
+    "storage_bucket": "flickr-f86ad.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:577072153893:android:ddb2271309965ebe",
+        "android_client_info": {
+          "package_name": "com.paweloot.flickrapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDEOmhVGdmEYcZTH-x-Ko-AXG0TgO3u2oc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "577072153893-iei3kug9uii4u3abqclpadbc6k38crd0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,4 +1,4 @@
-package com.paweloot.flickrapp.photo
+package com.paweloot.flickrapp.main
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -8,12 +8,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.paweloot.flickrapp.R
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.recyclerview_photo_item.view.*
+import org.json.JSONArray
 import java.util.*
 
-class PhotoRecyclerViewAdapter(private val data: ArrayList<String>) :
-    RecyclerView.Adapter<PhotoRecyclerViewAdapter.PhotoViewHolder>() {
+class MainRecyclerViewAdapter(private val data: JSONArray) :
+    RecyclerView.Adapter<MainRecyclerViewAdapter.PhotoViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PhotoRecyclerViewAdapter.PhotoViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainRecyclerViewAdapter.PhotoViewHolder {
         val inflatedView = LayoutInflater.from(parent.context)
             .inflate(R.layout.recyclerview_photo_item, parent, false) as View
 
@@ -21,18 +22,18 @@ class PhotoRecyclerViewAdapter(private val data: ArrayList<String>) :
     }
 
     override fun onBindViewHolder(holder: PhotoViewHolder, position: Int) {
-        holder.setImageURL("http://i.imgur.com/DvpvklR.png")
+        holder.setImageURL(data.getString(position))
     }
 
-    override fun getItemCount() = data.size
+    override fun getItemCount() = data.length()
 
-    fun addAt(element: String, position: Int) {
-        data.add(position, element)
+    fun addAt(position: Int, element: String?) {
+        data.put(position, element)
         notifyItemInserted(position)
     }
 
     fun removeAt(position: Int) {
-        data.removeAt(position)
+        data.remove(position)
         notifyItemRemoved(position)
     }
 
