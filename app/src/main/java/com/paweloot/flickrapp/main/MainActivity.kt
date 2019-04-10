@@ -17,14 +17,14 @@ import kotlinx.android.synthetic.main.activity_main.*
 import org.json.JSONArray
 
 class MainActivity : AppCompatActivity(), MainContract.View {
+    companion object {
+        private const val ADD_IMAGE_REQUEST_CODE = 666
+    }
+
     private lateinit var presenter: MainContract.Presenter
 
     private lateinit var viewManager: RecyclerView.LayoutManager
     private lateinit var viewAdapter: RecyclerView.Adapter<*>
-
-//    private lateinit var currImageUrls: JSONArray
-
-    private val addImageRequestCode: Int = 666
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,7 +60,6 @@ class MainActivity : AppCompatActivity(), MainContract.View {
 
     private fun saveImageUrls() {
         with(fetchSharedPref().edit()) {
-//            putString("image_urls_data", currImageUrls.toString())
             putString("image_urls_data", (viewAdapter as MainRecyclerViewAdapter).getData().toString())
             apply()
         }
@@ -88,7 +87,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
 
         if (resultCode == Activity.RESULT_OK) {
             when (requestCode) {
-                addImageRequestCode -> {
+                ADD_IMAGE_REQUEST_CODE -> {
                     val imageUrl = data?.getStringExtra("imageUrl")
 
                     if (imageUrl != null && imageUrl.isNotEmpty()) {
@@ -102,7 +101,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
 
     override fun addImage() {
         val intent = Intent(this, AddImageActivity::class.java)
-        startActivityForResult(intent, addImageRequestCode)
+        startActivityForResult(intent, ADD_IMAGE_REQUEST_CODE)
     }
 
     override fun fetchSharedPref(): SharedPreferences {
