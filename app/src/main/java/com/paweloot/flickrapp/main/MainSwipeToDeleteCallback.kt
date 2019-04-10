@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.ItemTouchHelper.*
 import androidx.recyclerview.widget.RecyclerView
+import kotlinx.android.synthetic.main.activity_main.*
 
 abstract class MainSwipeToDeleteCallback(context: Context) :
     ItemTouchHelper.SimpleCallback(0, START or END) {

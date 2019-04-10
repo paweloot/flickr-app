@@ -13,7 +13,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.paweloot.flickrapp.R
 import com.paweloot.flickrapp.add_image.AddImageActivity
-import kotlinx.android.synthetic.main.activity_photo.*
+import kotlinx.android.synthetic.main.activity_main.*
+import org.json.JSONArray
 
 class MainActivity : AppCompatActivity(), MainContract.View {
     private lateinit var presenter: MainContract.Presenter
@@ -21,44 +22,52 @@ class MainActivity : AppCompatActivity(), MainContract.View {
     private lateinit var viewManager: RecyclerView.LayoutManager
     private lateinit var viewAdapter: RecyclerView.Adapter<*>
 
-    private val ADD_IMAGE_REQUEST_CODE: Int = 666
+//    private lateinit var currImageUrls: JSONArray
+
+    private val addImageRequestCode: Int = 666
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_photo)
+        setContentView(R.layout.activity_main)
 
         presenter = MainPresenter(this)
-
-//        sampleData.put("https://images.unsplash.com/photo-1485199433301-8b7102e86995?ixlib=rb-" +
-//                "1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1380&q=80")
 
         viewManager = LinearLayoutManager(this)
         viewAdapter = MainRecyclerViewAdapter(presenter.fetchImageUrls(fetchSharedPref()))
 
-        photo_recycler_view.layoutManager = viewManager
-        photo_recycler_view.adapter = viewAdapter
+        image_recycler_view.layoutManager = viewManager
+        image_recycler_view.adapter = viewAdapter
 
+        addDeleteOnSwipe()
+    }
+
+    private fun addDeleteOnSwipe() {
         val swipeHandler = object : MainSwipeToDeleteCallback(this) {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                val adapter = photo_recycler_view.adapter as MainRecyclerViewAdapter
-                adapter.removeAt(viewHolder.adapterPosition)
+                val adapter = viewAdapter as MainRecyclerViewAdapter
+                adapter.removeImageAt(viewHolder.adapterPosition)
             }
         }
 
         val itemTouchHelper = ItemTouchHelper(swipeHandler)
-        itemTouchHelper.attachToRecyclerView(photo_recycler_view)
+        itemTouchHelper.attachToRecyclerView(image_recycler_view)
     }
 
-    override fun onResume() {
-        super.onResume()
+    override fun onStop() {
+        super.onStop()
+        saveImageUrls()
+    }
 
-        viewAdapter = MainRecyclerViewAdapter(presenter.fetchImageUrls(fetchSharedPref()))
-        photo_recycler_view.adapter = viewAdapter
+    private fun saveImageUrls() {
+        with(fetchSharedPref().edit()) {
+//            putString("image_urls_data", currImageUrls.toString())
+            putString("image_urls_data", (viewAdapter as MainRecyclerViewAdapter).getData().toString())
+            apply()
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)
-
         supportActionBar?.title = "Flickr"
 
         return super.onCreateOptionsMenu(menu)
@@ -79,16 +88,12 @@ class MainActivity : AppCompatActivity(), MainContract.View {
 
         if (resultCode == Activity.RESULT_OK) {
             when (requestCode) {
-                ADD_IMAGE_REQUEST_CODE -> {
+                addImageRequestCode -> {
                     val imageUrl = data?.getStringExtra("imageUrl")
 
-                    if (imageUrl != null) {
-                        presenter.saveImageUrl(
-                            getSharedPreferences(
-                                getString(R.string.fkr_image_urls_sharedpref),
-                                Context.MODE_PRIVATE
-                            ), imageUrl
-                        )
+                    if (imageUrl != null && imageUrl.isNotEmpty()) {
+                        val adapter = viewAdapter as MainRecyclerViewAdapter
+                        adapter.addImage(imageUrl)
                     }
                 }
             }
@@ -97,7 +102,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
 
     override fun addImage() {
         val intent = Intent(this, AddImageActivity::class.java)
-        startActivityForResult(intent, ADD_IMAGE_REQUEST_CODE)
+        startActivityForResult(intent, addImageRequestCode)
     }
 
     override fun fetchSharedPref(): SharedPreferences {

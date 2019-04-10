@@ -19,7 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
         <ImageView
-                android:id="@+id/photoIV"
+                android:id="@+id/imageIV"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintStart_toStartOf="parent"
@@ -35,7 +35,7 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/photoIV"
+                app:layout_constraintTop_toBottomOf="@+id/imageIV"
                 app:layout_constraintHorizontal_bias="0.0"
                 android:layout_marginTop="8dp"
                 style="@style/TextAppearance.AppCompat.Title"
@@ -46,7 +46,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/dateLabelTV"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/photoIV"
+                app:layout_constraintTop_toBottomOf="@+id/imageIV"
                 app:layout_constraintStart_toEndOf="@+id/nameLabelTV"
                 style="@style/TextAppearance.AppCompat.Subhead"
                 app:layout_constraintHorizontal_bias="1.0"

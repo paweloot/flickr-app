@@ -7,7 +7,6 @@ interface MainContract {
     interface Presenter {
         fun onAddImageButtonClick()
 
-        fun saveImageUrl(sharedPref: SharedPreferences, imageUrl: String)
         fun fetchImageUrls(sharedPref: SharedPreferences): JSONArray
     }
 
