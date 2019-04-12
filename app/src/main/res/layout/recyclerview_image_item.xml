@@ -19,7 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
         <ImageView
-                android:id="@+id/imageIV"
+                android:id="@+id/image_main"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintStart_toStartOf="parent"
@@ -29,45 +29,42 @@
                 android:scaleType="fitStart"
                 android:adjustViewBounds="true"/>
         <TextView
-                android:id="@+id/nameLabelTV"
-                android:text="@string/fkr_photo_name"
+                android:id="@+id/text_image_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageIV"
+                app:layout_constraintTop_toBottomOf="@+id/image_main"
                 app:layout_constraintHorizontal_bias="0.0"
                 android:layout_marginTop="8dp"
                 style="@style/TextAppearance.AppCompat.Title"
-                android:layout_marginStart="8dp"/>
+                android:layout_marginStart="8dp" tools:text="Dans la ville d\'amour"/>
         <TextView
-                android:text="@string/fkr_photo_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/dateLabelTV"
+                android:id="@+id/text_image_date"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageIV"
-                app:layout_constraintStart_toEndOf="@+id/nameLabelTV"
+                app:layout_constraintTop_toBottomOf="@+id/image_main"
+                app:layout_constraintStart_toEndOf="@+id/text_image_title"
                 style="@style/TextAppearance.AppCompat.Subhead"
                 app:layout_constraintHorizontal_bias="1.0"
                 android:layout_marginEnd="8dp"
-                app:layout_constraintBottom_toTopOf="@+id/divider"/>
+                app:layout_constraintBottom_toTopOf="@+id/divider" tools:text="04/09/2019"/>
         <View
                 android:id="@+id/divider"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="?android:attr/listDivider"
-                app:layout_constraintTop_toBottomOf="@+id/nameLabelTV"
+                app:layout_constraintTop_toBottomOf="@+id/text_image_title"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginTop="8dp"/>
         <TextView
-                android:text="@string/fkr_photo_tags"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/tagsLabelTV"
+                android:id="@+id/text_image_tags"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
@@ -76,7 +73,7 @@
                 android:layout_marginStart="8dp"
                 app:layout_constraintTop_toBottomOf="@+id/divider"
                 style="@style/TextAppearance.AppCompat.Caption"
-                android:layout_marginTop="8dp"/>
+                android:layout_marginTop="8dp" tools:text="#paris #pigeon #amour #eiffeltower"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.cardview.widget.CardView>

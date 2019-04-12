@@ -7,17 +7,23 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.paweloot.flickrapp.R
 import com.paweloot.flickrapp.add_image.AddImageActivity
+import com.paweloot.flickrapp.add_image.AddImageActivity.Companion.EXTRA_IMAGE_TITLE
+import com.paweloot.flickrapp.add_image.AddImageActivity.Companion.EXTRA_IMAGE_URL
 import kotlinx.android.synthetic.main.activity_main.*
-import org.json.JSONArray
+import java.text.SimpleDateFormat
+import java.util.*
 
 class MainActivity : AppCompatActivity(), MainContract.View {
     companion object {
+        const val PREF_IMAGES = "com.paweloot.flickrapp.IMAGES"
+        const val PREF_IMAGE_DATA = "IMAGE_DATA"
         private const val ADD_IMAGE_REQUEST_CODE = 666
     }
 
@@ -60,14 +66,14 @@ class MainActivity : AppCompatActivity(), MainContract.View {
 
     private fun saveImageUrls() {
         with(fetchSharedPref().edit()) {
-            putString("image_urls_data", (viewAdapter as MainRecyclerViewAdapter).getData().toString())
+            putString(PREF_IMAGE_DATA, (viewAdapter as MainRecyclerViewAdapter).getData().toString())
             apply()
         }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)
-        supportActionBar?.title = "Flickr"
+        supportActionBar?.title = getString(R.string.app_name)
 
         return super.onCreateOptionsMenu(menu)
     }
@@ -88,11 +94,15 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         if (resultCode == Activity.RESULT_OK) {
             when (requestCode) {
                 ADD_IMAGE_REQUEST_CODE -> {
-                    val imageUrl = data?.getStringExtra("imageUrl")
+                    val imageUrl = data?.getStringExtra(EXTRA_IMAGE_URL)
+                    val imageTitle = data?.getStringExtra(EXTRA_IMAGE_TITLE)
+                    val currentDate: String = SimpleDateFormat("MM/dd/yyyy", Locale.getDefault()).format(Date())
 
-                    if (imageUrl != null && imageUrl.isNotEmpty()) {
+                    if (imageUrl != null && imageTitle != null) {
                         val adapter = viewAdapter as MainRecyclerViewAdapter
-                        adapter.addImage(imageUrl)
+                        adapter.addImage(imageUrl, imageTitle, currentDate)
+                    } else {
+                        Toast.makeText(this, R.string.error_oops, Toast.LENGTH_SHORT).show()
                     }
                 }
             }
@@ -106,7 +116,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
 
     override fun fetchSharedPref(): SharedPreferences {
         return getSharedPreferences(
-            getString(R.string.fkr_image_urls_sharedpref),
+            PREF_IMAGES,
             Context.MODE_PRIVATE
         )
     }

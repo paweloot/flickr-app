@@ -10,9 +10,9 @@ class MainPresenter(private val view: MainContract.View) : MainContract.Presente
     }
 
     override fun fetchImageUrls(sharedPref: SharedPreferences): JSONArray {
-        val imageUrlsRaw = sharedPref.getString("image_urls_data", null)
+        val rawImageData = sharedPref.getString(MainActivity.PREF_IMAGE_DATA, null)
 
-        return if (imageUrlsRaw == null) JSONArray()
-        else JSONArray(imageUrlsRaw)
+        return if (rawImageData == null) JSONArray()
+        else JSONArray(rawImageData)
     }
 }

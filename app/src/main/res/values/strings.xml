@@ -1,11 +1,11 @@
 <resources>
     <string name="app_name">Flickr</string>
 
-    <string name="fkr_photo_tags">#paris #pigeon #amour #eiffeltower</string>
-    <string name="fkr_photo_name">Dans la ville d\'amour</string>
-    <string name="fkr_photo_date">04/09/2019</string>
-    <string name="main_menu_add_new_picture">Add new image</string>
-    <string name="add_image_enter_url">Enter URL:</string>
-    
-    <string name="fkr_image_urls_sharedpref">com.paweloot.flickrapp.image_urls</string>
+    <string name="menu_add_new_picture">Add new image</string>
+    <string name="add_image_url">URL:</string>
+
+    <string name="add_image_title">Title:</string>
+    <string name="error_empty_input">This field cannot be empty</string>
+    <string name="error_oops">Oops… Something went wrong.</string>
+    <string name="error_loading_image">Couldn\'t load the image</string>
 </resources>
