@@ -8,4 +8,13 @@
     <string name="error_empty_input">This field cannot be empty</string>
     <string name="error_oops">Oops… Something went wrong.</string>
     <string name="error_loading_image">Couldn\'t load the image</string>
+
+    <string name="title_activity_image">ImageActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="fragment_image_description">A clicked image from gallery.</string>
+    <string name="action_settings">Settings</string>
 </resources>

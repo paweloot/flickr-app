@@ -18,20 +18,20 @@ import org.json.JSONArray
 import org.json.JSONObject
 import java.lang.Exception
 
-class MainRecyclerViewAdapter(private val data: JSONArray) :
+class MainRecyclerViewAdapter(private val data: JSONArray, val onImageClickListener: OnImageClickListener) :
     RecyclerView.Adapter<MainRecyclerViewAdapter.PhotoViewHolder>() {
 
     companion object {
         const val KEY_IMAGE_URL = "URL"
         const val KEY_IMAGE_TITLE = "TITLE"
-        const val KEY_IMAGE_DATE = "date"
+        const val KEY_IMAGE_DATE = "DATE"
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainRecyclerViewAdapter.PhotoViewHolder {
         val inflatedView = LayoutInflater.from(parent.context)
             .inflate(R.layout.recyclerview_image_item, parent, false) as View
 
-        return PhotoViewHolder(inflatedView)
+        return PhotoViewHolder(inflatedView, onImageClickListener)
     }
 
     override fun onBindViewHolder(holder: PhotoViewHolder, position: Int) {
@@ -64,9 +64,18 @@ class MainRecyclerViewAdapter(private val data: JSONArray) :
         notifyItemRemoved(position)
     }
 
+    fun getImageUrlAt(position: Int): String {
+        return data.getJSONObject(position).getString(KEY_IMAGE_URL)
+    }
+
     fun getData(): JSONArray = data
 
-    class PhotoViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
+    class PhotoViewHolder(val view: View, val onImageClickListener: OnImageClickListener) :
+        RecyclerView.ViewHolder(view), View.OnClickListener {
+
+        init {
+            view.setOnClickListener(this)
+        }
 
         fun setURL(url: String) {
             Picasso.get().load(url).into(object : Target {
@@ -110,5 +119,13 @@ class MainRecyclerViewAdapter(private val data: JSONArray) :
         fun setTags(tags: String) {
             view.text_image_tags.text = tags
         }
+
+        override fun onClick(view: View?) {
+            onImageClickListener.onImageClick(adapterPosition)
+        }
+    }
+
+    interface OnImageClickListener {
+        fun onImageClick(position: Int)
     }
 }

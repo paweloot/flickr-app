@@ -16,11 +16,12 @@ import com.paweloot.flickrapp.R
 import com.paweloot.flickrapp.add_image.AddImageActivity
 import com.paweloot.flickrapp.add_image.AddImageActivity.Companion.EXTRA_IMAGE_TITLE
 import com.paweloot.flickrapp.add_image.AddImageActivity.Companion.EXTRA_IMAGE_URL
+import com.paweloot.flickrapp.image.ImageActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import java.text.SimpleDateFormat
 import java.util.*
 
-class MainActivity : AppCompatActivity(), MainContract.View {
+class MainActivity : AppCompatActivity(), MainContract.View, MainRecyclerViewAdapter.OnImageClickListener {
     companion object {
         const val PREF_IMAGES = "com.paweloot.flickrapp.IMAGES"
         const val PREF_IMAGE_DATA = "IMAGE_DATA"
@@ -39,7 +40,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         presenter = MainPresenter(this)
 
         viewManager = LinearLayoutManager(this)
-        viewAdapter = MainRecyclerViewAdapter(presenter.fetchImageUrls(fetchSharedPref()))
+        viewAdapter = MainRecyclerViewAdapter(presenter.fetchImageUrls(fetchSharedPref()), this)
 
         image_recycler_view.layoutManager = viewManager
         image_recycler_view.adapter = viewAdapter
@@ -119,5 +120,14 @@ class MainActivity : AppCompatActivity(), MainContract.View {
             PREF_IMAGES,
             Context.MODE_PRIVATE
         )
+    }
+
+    override fun onImageClick(position: Int) {
+        val imageUrl = (viewAdapter as MainRecyclerViewAdapter).getImageUrlAt(position)
+
+        val intent = Intent(this, ImageActivity::class.java)
+        intent.putExtra("URL", imageUrl)
+        intent
+        startActivity(intent)
     }
 }
