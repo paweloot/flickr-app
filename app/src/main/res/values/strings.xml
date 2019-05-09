@@ -14,7 +14,7 @@
     <string name="dummy_content">DUMMY\nCONTENT</string>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="hello_blank_fragment">Image Details Fragment</string>
     <string name="fragment_image_description">A clicked image from gallery.</string>
     <string name="action_settings">Settings</string>
 </resources>

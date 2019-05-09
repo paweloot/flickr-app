@@ -11,6 +11,7 @@ class ImageActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_image)
 
-        textView2.text = intent.getStringExtra("URL")
+//        textView2.text = intent.getStringExtra("URL")
+
     }
 }

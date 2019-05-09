@@ -15,4 +15,8 @@ class MainPresenter(private val view: MainContract.View) : MainContract.Presente
         return if (rawImageData == null) JSONArray()
         else JSONArray(rawImageData)
     }
+
+    override fun pickSimilarImages(n: Int, data: JSONArray) {
+
+    }
 }

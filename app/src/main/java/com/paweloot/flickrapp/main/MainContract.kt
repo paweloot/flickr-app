@@ -8,6 +8,7 @@ interface MainContract {
         fun onAddImageButtonClick()
 
         fun fetchImageUrls(sharedPref: SharedPreferences): JSONArray
+        fun pickSimilarImages(n: Int, data: JSONArray)
     }
 
     interface View {
