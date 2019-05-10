@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.paweloot.flickrapp.R
 import com.paweloot.flickrapp.add_image.AddImageActivity
+import com.paweloot.flickrapp.add_image.AddImageActivity.Companion.EXTRA_IMAGE_DATE
 import com.paweloot.flickrapp.add_image.AddImageActivity.Companion.EXTRA_IMAGE_TITLE
 import com.paweloot.flickrapp.add_image.AddImageActivity.Companion.EXTRA_IMAGE_URL
 import com.paweloot.flickrapp.image.ImageActivity
@@ -97,11 +98,11 @@ class MainActivity : AppCompatActivity(), MainContract.View, MainRecyclerViewAda
                 ADD_IMAGE_REQUEST_CODE -> {
                     val imageUrl = data?.getStringExtra(EXTRA_IMAGE_URL)
                     val imageTitle = data?.getStringExtra(EXTRA_IMAGE_TITLE)
-                    val currentDate: String = SimpleDateFormat("MM/dd/yyyy", Locale.getDefault()).format(Date())
+                    val imageDate = data?.getStringExtra(EXTRA_IMAGE_DATE)
 
-                    if (imageUrl != null && imageTitle != null) {
+                    if (imageUrl != null && imageTitle != null && imageDate != null) {
                         val adapter = viewAdapter as MainRecyclerViewAdapter
-                        adapter.addImage(imageUrl, imageTitle, currentDate)
+                        adapter.addImage(imageUrl, imageTitle, imageDate)
                     } else {
                         Toast.makeText(this, R.string.error_oops, Toast.LENGTH_SHORT).show()
                     }

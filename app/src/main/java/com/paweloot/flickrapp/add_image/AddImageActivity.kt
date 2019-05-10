@@ -1,38 +1,81 @@
 package com.paweloot.flickrapp.add_image
 
 import android.app.Activity
+import android.app.DatePickerDialog
 import android.content.Intent
 import android.os.Bundle
+import android.widget.DatePicker
 import androidx.appcompat.app.AppCompatActivity
 import com.paweloot.flickrapp.R
 import kotlinx.android.synthetic.main.activity_add_image.*
+import java.util.*
 
-class AddImageActivity : AppCompatActivity() {
+class AddImageActivity : AppCompatActivity(), AddImageContract.View, DatePickerDialog.OnDateSetListener {
     companion object {
         const val EXTRA_IMAGE_URL = "imageUrl"
         const val EXTRA_IMAGE_TITLE = "imageTitle"
+        const val EXTRA_IMAGE_DATE = "imageDate"
+        const val FRAGMENT_TAG_DATE_PICKER = "datePicker"
     }
+
+    private lateinit var presenter: AddImageContract.Presenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_image)
 
+        presenter = AddImagePresenter(this)
+
+        setDefaultImageDateAsCurrent()
+        edit_image_date.setOnClickListener {
+            presenter.onEditDateClicked()
+        }
+
         button_add_image.setOnClickListener {
-            if (isInputNotEmpty()) {
-                val resultIntent = Intent()
-                resultIntent.putExtra(EXTRA_IMAGE_URL, edit_image_url.text.toString())
-                resultIntent.putExtra(EXTRA_IMAGE_TITLE, edit_image_title.text.toString())
-                setResult(Activity.RESULT_OK, resultIntent)
-                finish()
-            } else {
-                displayErrorMessage()
-            }
+            presenter.onAddImageButtonClicked()
+        }
+    }
+
+    private fun setDefaultImageDateAsCurrent() {
+        val c = Calendar.getInstance()
+        val year = c.get(Calendar.YEAR)
+        val month = c.get(Calendar.MONTH)
+        val day = c.get(Calendar.DAY_OF_MONTH)
+
+        val currentDate = "$day/$month/$year"
+        edit_image_date.setText(currentDate)
+    }
+
+    override fun showDatePickerDialog() {
+        val datePicker = DatePickerFragment(this)
+        datePicker.show(supportFragmentManager, FRAGMENT_TAG_DATE_PICKER)
+    }
+
+    override fun onDateSet(view: DatePicker?, year: Int, month: Int, day: Int) {
+        val pickedDate = "$day/$month/$year"
+        edit_image_date.setText(pickedDate)
+    }
+
+    override fun addNewImage() {
+        if (isInputNotEmpty()) {
+            returnNewImageData()
+        } else {
+            displayErrorMessage()
         }
     }
 
     private fun isInputNotEmpty(): Boolean {
         return (edit_image_url.text.isNotEmpty() &&
                 edit_image_title.text.isNotEmpty())
+    }
+
+    private fun returnNewImageData() {
+        val resultIntent = Intent()
+        resultIntent.putExtra(EXTRA_IMAGE_URL, edit_image_url.text.toString())
+        resultIntent.putExtra(EXTRA_IMAGE_TITLE, edit_image_title.text.toString())
+        resultIntent.putExtra(EXTRA_IMAGE_DATE, edit_image_date.text.toString())
+        setResult(Activity.RESULT_OK, resultIntent)
+        finish()
     }
 
     private fun displayErrorMessage() {
