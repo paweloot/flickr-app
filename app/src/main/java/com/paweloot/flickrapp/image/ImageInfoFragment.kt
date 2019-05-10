@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import com.paweloot.flickrapp.R
 import com.paweloot.flickrapp.main.MainRecyclerViewAdapter
 import com.paweloot.flickrapp.main.MainRecyclerViewAdapter.Companion.JSON_KEY_IMAGE_DATE
+import com.paweloot.flickrapp.main.MainRecyclerViewAdapter.Companion.JSON_KEY_IMAGE_TAGS
 import com.paweloot.flickrapp.main.MainRecyclerViewAdapter.Companion.JSON_KEY_IMAGE_TITLE
 import com.paweloot.flickrapp.main.MainRecyclerViewAdapter.Companion.JSON_KEY_IMAGE_URL
 import kotlinx.android.synthetic.main.fragment_image_info.*
@@ -34,7 +35,7 @@ class ImageInfoFragment : Fragment() {
 
         view.text_image_info_title.text = image.getString(JSON_KEY_IMAGE_TITLE)
         view.text_image_info_date.text = image.getString(JSON_KEY_IMAGE_DATE)
-//        text_image_info_tags = image.getString(MainRecyclerViewAdapter.) //TODO Tags
+        view.text_image_info_tags.text = image.getString(JSON_KEY_IMAGE_TAGS)
         view.text_image_info_url.text = image.getString(JSON_KEY_IMAGE_URL)
     }
 
