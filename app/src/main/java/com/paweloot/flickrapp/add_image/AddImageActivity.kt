@@ -39,7 +39,7 @@ class AddImageActivity : AppCompatActivity(), AddImageContract.View, DatePickerD
     private fun setDefaultImageDateAsCurrent() {
         val c = Calendar.getInstance()
         val year = c.get(Calendar.YEAR)
-        val month = c.get(Calendar.MONTH)
+        val month = c.get(Calendar.MONTH) + 1
         val day = c.get(Calendar.DAY_OF_MONTH)
 
         val currentDate = "$day/$month/$year"
@@ -52,7 +52,7 @@ class AddImageActivity : AppCompatActivity(), AddImageContract.View, DatePickerD
     }
 
     override fun onDateSet(view: DatePicker?, year: Int, month: Int, day: Int) {
-        val pickedDate = "$day/$month/$year"
+        val pickedDate = "$day/${month+1}/$year"
         edit_image_date.setText(pickedDate)
     }
 

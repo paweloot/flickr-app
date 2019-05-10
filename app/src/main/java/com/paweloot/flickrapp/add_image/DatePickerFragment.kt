@@ -14,7 +14,7 @@ import androidx.fragment.app.DialogFragment
 import com.paweloot.flickrapp.R
 import java.util.*
 
-class DatePickerFragment(val onDateSetListener: DatePickerDialog.OnDateSetListener) : DialogFragment() {
+class DatePickerFragment(private val onDateSetListener: DatePickerDialog.OnDateSetListener) : DialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val c = Calendar.getInstance()
