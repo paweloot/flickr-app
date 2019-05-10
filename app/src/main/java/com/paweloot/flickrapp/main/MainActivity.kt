@@ -33,6 +33,8 @@ class MainActivity : AppCompatActivity(), MainContract.View, MainRecyclerViewAda
     companion object {
         const val PREF_IMAGES = "com.paweloot.flickrapp.IMAGES"
         const val PREF_IMAGE_DATA = "IMAGE_DATA"
+        const val INTENT_IMAGE_DATA = "IMAGE_DATA"
+        const val INTENT_IMAGE_POSITION = "IMAGE_POSITION"
         private const val ADD_IMAGE_REQUEST_CODE = 666
     }
 
@@ -141,8 +143,8 @@ class MainActivity : AppCompatActivity(), MainContract.View, MainRecyclerViewAda
         val similarImages = presenter.pickSimilarImages(6, adapter.getData())
 
         val intent = Intent(this, ImageActivity::class.java)
-        intent.putExtra("imageData", adapter.getData().toString())
-        intent.putExtra("imagePosition", position)
+        intent.putExtra(INTENT_IMAGE_DATA, adapter.getData().toString())
+        intent.putExtra(INTENT_IMAGE_POSITION, position)
         startActivity(intent)
     }
 }

@@ -9,6 +9,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.Navigation
 import com.paweloot.flickrapp.R
+import com.paweloot.flickrapp.main.MainActivity
+import com.paweloot.flickrapp.main.MainActivity.Companion.INTENT_IMAGE_DATA
+import com.paweloot.flickrapp.main.MainActivity.Companion.INTENT_IMAGE_POSITION
 import com.paweloot.flickrapp.main.MainRecyclerViewAdapter
 import com.paweloot.flickrapp.main.MainRecyclerViewAdapter.Companion.JSON_KEY_IMAGE_URL
 import com.squareup.picasso.Picasso
@@ -24,9 +27,9 @@ class ImageFragment : Fragment() {
     ): View? {
         val view: View = inflater.inflate(R.layout.fragment_image, container, false)
 
-        val imageDataRaw = activity?.intent?.getStringExtra("imageData")
+        val imageDataRaw = activity?.intent?.getStringExtra(INTENT_IMAGE_DATA)
         val imageData = JSONArray(imageDataRaw)
-        val position = activity?.intent?.getIntExtra("imagePosition", 0)
+        val position = activity?.intent?.getIntExtra(INTENT_IMAGE_POSITION, 0)
 
         if (position != null) {
             val currImageUrl = imageData.getJSONObject(position).getString(JSON_KEY_IMAGE_URL)
