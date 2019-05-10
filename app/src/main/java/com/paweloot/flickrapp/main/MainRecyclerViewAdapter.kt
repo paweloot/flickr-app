@@ -25,6 +25,7 @@ class MainRecyclerViewAdapter(private val data: JSONArray, val onImageClickListe
         const val JSON_KEY_IMAGE_URL = "URL"
         const val JSON_KEY_IMAGE_TITLE = "TITLE"
         const val JSON_KEY_IMAGE_DATE = "DATE"
+        const val JSON_KEY_IMAGE_TAGS = "TAGS"
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainRecyclerViewAdapter.PhotoViewHolder {
@@ -41,21 +42,23 @@ class MainRecyclerViewAdapter(private val data: JSONArray, val onImageClickListe
             setURL(image.getString(JSON_KEY_IMAGE_URL))
             setTitle(image.getString(JSON_KEY_IMAGE_TITLE))
             setDate(image.getString(JSON_KEY_IMAGE_DATE))
+            setTags(image.getString(JSON_KEY_IMAGE_TAGS))
         }
     }
 
     override fun getItemCount() = data.length()
 
-    fun addImage(url: String, title: String, date: String) {
-        data.put(createImageJSONObject(url, title, date))
+    fun addImage(url: String, title: String, date: String, tags: String) {
+        data.put(createImageJSONObject(url, title, date, tags))
         notifyDataSetChanged()
     }
 
-    private fun createImageJSONObject(url: String, title: String, date: String): JSONObject {
+    private fun createImageJSONObject(url: String, title: String, date: String, tags: String): JSONObject {
         return JSONObject().apply {
             put(JSON_KEY_IMAGE_URL, url)
             put(JSON_KEY_IMAGE_TITLE, title)
             put(JSON_KEY_IMAGE_DATE, date)
+            put(JSON_KEY_IMAGE_TAGS, tags)
         }
     }
 
@@ -82,22 +85,6 @@ class MainRecyclerViewAdapter(private val data: JSONArray, val onImageClickListe
                 override fun onBitmapLoaded(bitmap: Bitmap?, from: Picasso.LoadedFrom?) {
                     if (bitmap != null) {
                         view.image_main.setImageBitmap(bitmap)
-
-                        val vision = FirebaseVisionImage.fromBitmap(bitmap)
-                        val labeler = FirebaseVision.getInstance().onDeviceImageLabeler
-                        labeler.processImage(vision)
-                            .addOnSuccessListener { labels ->
-                                setTags(
-                                    "#${labels.take(3)
-                                        .joinToString(" #") {
-                                            it.text.toLowerCase()
-                                        }}"
-                                )
-                            }
-
-                            .addOnFailureListener { e ->
-                                Log.wtf("ImageLabeler", e.message)
-                            }
                     }
                 }
 
@@ -117,7 +104,10 @@ class MainRecyclerViewAdapter(private val data: JSONArray, val onImageClickListe
         }
 
         fun setTags(tags: String) {
-            view.text_image_tags.text = tags
+            val firstThreeTags = tags.substring(1).split(" #").take(3)
+            val tagsJoined = "#${firstThreeTags.joinToString(" #")}"
+
+            view.text_image_tags.text = tagsJoined
         }
 
         override fun onClick(view: View?) {

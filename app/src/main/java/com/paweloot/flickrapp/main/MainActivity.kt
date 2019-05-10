@@ -4,7 +4,10 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.graphics.Bitmap
+import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
@@ -12,15 +15,19 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.ml.vision.FirebaseVision
+import com.google.firebase.ml.vision.common.FirebaseVisionImage
+import com.google.firebase.ml.vision.label.FirebaseVisionImageLabel
 import com.paweloot.flickrapp.R
 import com.paweloot.flickrapp.add_image.AddImageActivity
 import com.paweloot.flickrapp.add_image.AddImageActivity.Companion.EXTRA_IMAGE_DATE
 import com.paweloot.flickrapp.add_image.AddImageActivity.Companion.EXTRA_IMAGE_TITLE
 import com.paweloot.flickrapp.add_image.AddImageActivity.Companion.EXTRA_IMAGE_URL
 import com.paweloot.flickrapp.image.ImageActivity
+import com.squareup.picasso.Picasso
+import com.squareup.picasso.Target
 import kotlinx.android.synthetic.main.activity_main.*
-import java.text.SimpleDateFormat
-import java.util.*
+import java.lang.Exception
 
 class MainActivity : AppCompatActivity(), MainContract.View, MainRecyclerViewAdapter.OnImageClickListener {
     companion object {
@@ -101,14 +108,18 @@ class MainActivity : AppCompatActivity(), MainContract.View, MainRecyclerViewAda
                     val imageDate = data?.getStringExtra(EXTRA_IMAGE_DATE)
 
                     if (imageUrl != null && imageTitle != null && imageDate != null) {
-                        val adapter = viewAdapter as MainRecyclerViewAdapter
-                        adapter.addImage(imageUrl, imageTitle, imageDate)
+                        presenter.generateTagsAndAddImage(imageUrl, imageTitle, imageDate)
                     } else {
                         Toast.makeText(this, R.string.error_oops, Toast.LENGTH_SHORT).show()
                     }
                 }
             }
         }
+    }
+
+    override fun addImageToAdapter(url: String, title: String, date: String, tags: String) {
+        val adapter = viewAdapter as MainRecyclerViewAdapter
+        adapter.addImage(url, title, date, tags)
     }
 
     override fun addImage() {
