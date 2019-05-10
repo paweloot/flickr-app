@@ -6,10 +6,18 @@
               android:orientation="vertical"
               tools:context=".image.ImageDetailsFragment">
 
-    <!--    <TextView-->
-    <!--            android:layout_width="match_parent"-->
-    <!--            android:layout_height="match_parent"-->
-    <!--            android:text="@string/hello_blank_fragment"/>-->
+    <fragment android:id="@+id/image_info_fragment"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:layout_weight="1"
+              android:name="com.paweloot.flickrapp.image.ImageInfoFragment"
+    />
 
+    <fragment android:id="@+id/similar_images_fragment"
+              android:name="com.paweloot.flickrapp.image.SimilarImagesFragment"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:layout_weight="1"
+    />
 
 </LinearLayout>

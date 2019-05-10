@@ -22,9 +22,9 @@ class MainRecyclerViewAdapter(private val data: JSONArray, val onImageClickListe
     RecyclerView.Adapter<MainRecyclerViewAdapter.PhotoViewHolder>() {
 
     companion object {
-        const val KEY_IMAGE_URL = "URL"
-        const val KEY_IMAGE_TITLE = "TITLE"
-        const val KEY_IMAGE_DATE = "DATE"
+        const val JSON_KEY_IMAGE_URL = "URL"
+        const val JSON_KEY_IMAGE_TITLE = "TITLE"
+        const val JSON_KEY_IMAGE_DATE = "DATE"
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainRecyclerViewAdapter.PhotoViewHolder {
@@ -38,9 +38,9 @@ class MainRecyclerViewAdapter(private val data: JSONArray, val onImageClickListe
         val image = data.getJSONObject(position)
 
         holder.apply {
-            setURL(image.getString(KEY_IMAGE_URL))
-            setTitle(image.getString(KEY_IMAGE_TITLE))
-            setDate(image.getString(KEY_IMAGE_DATE))
+            setURL(image.getString(JSON_KEY_IMAGE_URL))
+            setTitle(image.getString(JSON_KEY_IMAGE_TITLE))
+            setDate(image.getString(JSON_KEY_IMAGE_DATE))
         }
     }
 
@@ -53,9 +53,9 @@ class MainRecyclerViewAdapter(private val data: JSONArray, val onImageClickListe
 
     private fun createImageJSONObject(url: String, title: String, date: String): JSONObject {
         return JSONObject().apply {
-            put(KEY_IMAGE_URL, url)
-            put(KEY_IMAGE_TITLE, title)
-            put(KEY_IMAGE_DATE, date)
+            put(JSON_KEY_IMAGE_URL, url)
+            put(JSON_KEY_IMAGE_TITLE, title)
+            put(JSON_KEY_IMAGE_DATE, date)
         }
     }
 
@@ -65,12 +65,12 @@ class MainRecyclerViewAdapter(private val data: JSONArray, val onImageClickListe
     }
 
     fun getImageUrlAt(position: Int): String {
-        return data.getJSONObject(position).getString(KEY_IMAGE_URL)
+        return data.getJSONObject(position).getString(JSON_KEY_IMAGE_URL)
     }
 
     fun getData(): JSONArray = data
 
-    class PhotoViewHolder(val view: View, val onImageClickListener: OnImageClickListener) :
+    class PhotoViewHolder(val view: View, private val onImageClickListener: OnImageClickListener) :
         RecyclerView.ViewHolder(view), View.OnClickListener {
 
         init {

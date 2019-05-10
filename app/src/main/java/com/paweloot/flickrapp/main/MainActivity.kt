@@ -130,7 +130,8 @@ class MainActivity : AppCompatActivity(), MainContract.View, MainRecyclerViewAda
         val similarImages = presenter.pickSimilarImages(6, adapter.getData())
 
         val intent = Intent(this, ImageActivity::class.java)
-        intent.putExtra("URL", imageUrl)
+        intent.putExtra("imageData", adapter.getData().toString())
+        intent.putExtra("imagePosition", position)
         startActivity(intent)
     }
 }
