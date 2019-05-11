@@ -15,7 +15,7 @@ import java.util.*
 
 class AddImageActivity : AppCompatActivity(), AddImageContract.View, DatePickerDialog.OnDateSetListener {
     companion object {
-        const val FRAGMENT_DATE_PICKER = "datePicker"
+        const val FRAGMENT_DATE_PICKER = "DATE_PICKER"
     }
 
     private lateinit var presenter: AddImageContract.Presenter
