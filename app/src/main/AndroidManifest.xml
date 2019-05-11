@@ -13,10 +13,10 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme"
             tools:ignore="GoogleAppIndexingWarning">
+
         <activity
                 android:name=".image.ImageActivity"
                 android:configChanges="orientation|keyboardHidden|screenSize"
-                android:label="@string/title_activity_image"
                 android:parentActivityName=".main.MainActivity"
                 android:theme="@style/AppTheme.NoActionBar">
             <meta-data
@@ -35,7 +35,9 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".add_image.AddImageActivity">
+
+        <activity android:name=".add_image.AddImageActivity"
+                  android:parentActivityName=".main.MainActivity">
             <intent-filter>
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>

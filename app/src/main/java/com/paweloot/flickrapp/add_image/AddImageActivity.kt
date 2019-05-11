@@ -4,8 +4,10 @@ import android.app.Activity
 import android.app.DatePickerDialog
 import android.content.Intent
 import android.os.Bundle
+import android.view.MenuItem
 import android.widget.DatePicker
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.NavUtils
 import com.paweloot.flickrapp.R
 import com.paweloot.flickrapp.common.IMAGE_DATE
 import com.paweloot.flickrapp.common.IMAGE_TITLE
@@ -25,6 +27,8 @@ class AddImageActivity : AppCompatActivity(), AddImageContract.View, DatePickerD
         setContentView(R.layout.activity_add_image)
 
         presenter = AddImagePresenter(this)
+        supportActionBar?.title = "Add image"
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         setDefaultImageDateAsCurrent()
         edit_image_date.setOnClickListener {
@@ -44,6 +48,14 @@ class AddImageActivity : AppCompatActivity(), AddImageContract.View, DatePickerD
 
         val currentDate = "$day/$month/$year"
         edit_image_date.setText(currentDate)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        when (item?.itemId) {
+            R.id.home -> NavUtils.navigateUpFromSameTask(this)
+        }
+
+        return super.onOptionsItemSelected(item)
     }
 
     override fun showDatePickerDialog() {

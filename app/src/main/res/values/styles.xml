@@ -8,16 +8,6 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <style name="Title">
-        <item name="android:textSize">@dimen/fkr_font_title</item>
-        <item name="android:textColor">@color/colorTextTitle</item>
-    </style>
-
-    <style name="Subhead">
-        <item name="android:textSize">@dimen/fkr_font_subhead</item>
-        <item name="android:textColor">@color/colorTextSubhead</item>
-    </style>
-
     <style name="FullscreenTheme" parent="AppTheme">
         <item name="android:actionBarStyle">@style/FullscreenActionBarStyle</item>
         <item name="android:windowActionBarOverlay">true</item>

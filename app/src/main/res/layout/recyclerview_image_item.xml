@@ -25,7 +25,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                android:contentDescription="@string/fkr_loaded_image"
+                android:contentDescription="@string/loaded_image_description"
                 android:scaleType="fitStart"
                 android:adjustViewBounds="true"
                 tools:srcCompat="@tools:sample/backgrounds/scenic[2]"

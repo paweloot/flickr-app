@@ -1,11 +1,14 @@
 package com.paweloot.flickrapp.main
 
+import android.content.Context
 import android.content.SharedPreferences
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
 import android.util.Log
+import android.widget.Toast
 import com.google.firebase.ml.vision.FirebaseVision
 import com.google.firebase.ml.vision.common.FirebaseVisionImage
+import com.paweloot.flickrapp.R
 import com.paweloot.flickrapp.common.IMAGE_DATA
 import com.squareup.picasso.Picasso
 import com.squareup.picasso.Target
@@ -49,7 +52,9 @@ class MainPresenter(private val view: MainContract.View) : MainContract.Presente
             }
 
             override fun onPrepareLoad(placeHolderDrawable: Drawable?) {}
-            override fun onBitmapFailed(e: Exception?, errorDrawable: Drawable?) {}
+            override fun onBitmapFailed(e: Exception?, errorDrawable: Drawable?) {
+                Toast.makeText(view as Context, R.string.error_loading_image, Toast.LENGTH_SHORT).show()
+            }
         })
 
     }
