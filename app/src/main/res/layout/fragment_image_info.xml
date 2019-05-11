@@ -7,40 +7,45 @@
 
     <TextView
             android:id="@+id/text_image_info_date"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             style="@style/TextAppearance.AppCompat.Subhead"
             tools:text="04/09/2019" app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
             android:layout_marginEnd="8dp"
-            app:layout_constraintBottom_toTopOf="@+id/info_divider" android:layout_marginTop="8dp"/>
+            app:layout_constraintBottom_toTopOf="@+id/info_divider"
+            android:layout_marginBottom="8dp" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintHorizontal_bias="1.0" android:layout_marginStart="8dp"/>
     <View
             android:id="@+id/info_divider"
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="?android:attr/listDivider"
-            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintTop_toBottomOf="@+id/text_image_info_title"
-            app:layout_constraintStart_toStartOf="parent" android:layout_marginTop="8dp"
-            android:layout_marginStart="8dp" android:layout_marginEnd="8dp"/>
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="8dp" android:layout_marginEnd="8dp"
+            app:layout_constraintBottom_toTopOf="@+id/text_image_info_tags" android:layout_marginBottom="8dp"/>
     <TextView
             android:id="@+id/text_image_info_tags"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             style="@style/TextAppearance.AppCompat.Caption"
             tools:text="#paris #pigeon #amour #eiffeltower"
-            app:layout_constraintTop_toBottomOf="@+id/info_divider" app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintHorizontal_bias="0.0"
-            android:layout_marginStart="8dp" android:layout_marginTop="8dp" android:layout_marginEnd="8dp"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginStart="8dp" android:layout_marginEnd="8dp"
+            app:layout_constraintBottom_toTopOf="@+id/text_image_info_url" android:layout_marginBottom="8dp"/>
     <TextView
             android:id="@+id/text_image_info_title"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             style="@style/TextAppearance.AppCompat.Title"
+            android:textSize="34dp"
             tools:text="Dans la ville d\'amour"
             app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="16dp" app:layout_constraintEnd_toStartOf="@+id/text_image_info_date"
-            app:layout_constraintHorizontal_bias="0.0" android:layout_marginEnd="8dp"/>
+            android:layout_marginTop="16dp"
+            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintBottom_toTopOf="@+id/text_image_info_date"
+            app:layout_constraintVertical_bias="1.0" android:layout_marginEnd="8dp" android:layout_marginBottom="8dp"/>
     <TextView
             android:id="@+id/text_image_info_url"
             android:layout_width="0dp"
@@ -49,7 +54,8 @@
             tools:text="https://images.unsplash.com/photo-1557428894-56bcc97113fe?ixlib=rb-1.2.1auto=formatfit=cropw=676q=80"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/text_image_info_tags" android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp" app:layout_constraintHorizontal_bias="0.0" android:layout_marginEnd="8dp"/>
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

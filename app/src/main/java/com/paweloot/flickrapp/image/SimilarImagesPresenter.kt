@@ -1,6 +1,6 @@
 package com.paweloot.flickrapp.image
 
-import com.paweloot.flickrapp.main.MainRecyclerViewAdapter.Companion.JSON_KEY_IMAGE_TAGS
+import com.paweloot.flickrapp.common.IMAGE_TAGS
 import org.json.JSONArray
 
 class SimilarImagesPresenter(private val view: SimilarImagesContract.View) : SimilarImagesContract.Presenter {
@@ -11,14 +11,14 @@ class SimilarImagesPresenter(private val view: SimilarImagesContract.View) : Sim
 
     override fun pickSimilarImages(n: Int, imageData: JSONArray, currentPosition: Int) {
         val currentImage = imageData.getJSONObject(currentPosition)
-        val currentTags = tagsToList(currentImage.getString(JSON_KEY_IMAGE_TAGS))
+        val currentTags = tagsToList(currentImage.getString(IMAGE_TAGS))
 
         val similarImagesPositions = ArrayList<Int>()
 
         for (i in 0 until imageData.length()) {
             if (i != currentPosition && similarImagesPositions.size < 6) {
                 val image = imageData.getJSONObject(i)
-                val tags = tagsToList(image.getString(JSON_KEY_IMAGE_TAGS))
+                val tags = tagsToList(image.getString(IMAGE_TAGS))
 
                 if (hasAtLeastTheSameNTags(MIN_THE_SAME_TAGS, tags, currentTags)) {
                     similarImagesPositions.add(i)

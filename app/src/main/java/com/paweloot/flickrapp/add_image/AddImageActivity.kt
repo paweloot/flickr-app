@@ -7,15 +7,15 @@ import android.os.Bundle
 import android.widget.DatePicker
 import androidx.appcompat.app.AppCompatActivity
 import com.paweloot.flickrapp.R
+import com.paweloot.flickrapp.common.IMAGE_DATE
+import com.paweloot.flickrapp.common.IMAGE_TITLE
+import com.paweloot.flickrapp.common.IMAGE_URL
 import kotlinx.android.synthetic.main.activity_add_image.*
 import java.util.*
 
 class AddImageActivity : AppCompatActivity(), AddImageContract.View, DatePickerDialog.OnDateSetListener {
     companion object {
-        const val EXTRA_IMAGE_URL = "imageUrl"
-        const val EXTRA_IMAGE_TITLE = "imageTitle"
-        const val EXTRA_IMAGE_DATE = "imageDate"
-        const val FRAGMENT_TAG_DATE_PICKER = "datePicker"
+        const val FRAGMENT_DATE_PICKER = "datePicker"
     }
 
     private lateinit var presenter: AddImageContract.Presenter
@@ -48,11 +48,11 @@ class AddImageActivity : AppCompatActivity(), AddImageContract.View, DatePickerD
 
     override fun showDatePickerDialog() {
         val datePicker = DatePickerFragment(this)
-        datePicker.show(supportFragmentManager, FRAGMENT_TAG_DATE_PICKER)
+        datePicker.show(supportFragmentManager, FRAGMENT_DATE_PICKER)
     }
 
     override fun onDateSet(view: DatePicker?, year: Int, month: Int, day: Int) {
-        val pickedDate = "$day/${month+1}/$year"
+        val pickedDate = "$day/${month + 1}/$year"
         edit_image_date.setText(pickedDate)
     }
 
@@ -71,9 +71,9 @@ class AddImageActivity : AppCompatActivity(), AddImageContract.View, DatePickerD
 
     private fun returnNewImageData() {
         val resultIntent = Intent()
-        resultIntent.putExtra(EXTRA_IMAGE_URL, edit_image_url.text.toString())
-        resultIntent.putExtra(EXTRA_IMAGE_TITLE, edit_image_title.text.toString())
-        resultIntent.putExtra(EXTRA_IMAGE_DATE, edit_image_date.text.toString())
+        resultIntent.putExtra(IMAGE_URL, edit_image_url.text.toString())
+        resultIntent.putExtra(IMAGE_TITLE, edit_image_title.text.toString())
+        resultIntent.putExtra(IMAGE_DATE, edit_image_date.text.toString())
         setResult(Activity.RESULT_OK, resultIntent)
         finish()
     }

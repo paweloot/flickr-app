@@ -4,10 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
-import android.graphics.Bitmap
-import android.graphics.drawable.Drawable
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
@@ -15,26 +12,14 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.firebase.ml.vision.FirebaseVision
-import com.google.firebase.ml.vision.common.FirebaseVisionImage
-import com.google.firebase.ml.vision.label.FirebaseVisionImageLabel
 import com.paweloot.flickrapp.R
 import com.paweloot.flickrapp.add_image.AddImageActivity
-import com.paweloot.flickrapp.add_image.AddImageActivity.Companion.EXTRA_IMAGE_DATE
-import com.paweloot.flickrapp.add_image.AddImageActivity.Companion.EXTRA_IMAGE_TITLE
-import com.paweloot.flickrapp.add_image.AddImageActivity.Companion.EXTRA_IMAGE_URL
 import com.paweloot.flickrapp.image.ImageActivity
-import com.squareup.picasso.Picasso
-import com.squareup.picasso.Target
 import kotlinx.android.synthetic.main.activity_main.*
-import java.lang.Exception
+import com.paweloot.flickrapp.common.*
 
 class MainActivity : AppCompatActivity(), MainContract.View, MainRecyclerViewAdapter.OnImageClickListener {
     companion object {
-        const val PREF_IMAGES = "com.paweloot.flickrapp.IMAGES"
-        const val PREF_IMAGE_DATA = "IMAGE_DATA"
-        const val INTENT_IMAGE_DATA = "IMAGE_DATA"
-        const val INTENT_IMAGE_POSITION = "IMAGE_POSITION"
         private const val ADD_IMAGE_REQUEST_CODE = 666
     }
 
@@ -58,8 +43,13 @@ class MainActivity : AppCompatActivity(), MainContract.View, MainRecyclerViewAda
         addDeleteOnSwipe()
     }
 
+    override fun onStop() {
+        super.onStop()
+        saveImageUrls()
+    }
+
     private fun addDeleteOnSwipe() {
-        val swipeHandler = object : MainSwipeToDeleteCallback(this) {
+        val swipeHandler = object : MainSwipeToDeleteCallback() {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val adapter = viewAdapter as MainRecyclerViewAdapter
                 adapter.removeImageAt(viewHolder.adapterPosition)
@@ -70,14 +60,9 @@ class MainActivity : AppCompatActivity(), MainContract.View, MainRecyclerViewAda
         itemTouchHelper.attachToRecyclerView(image_recycler_view)
     }
 
-    override fun onStop() {
-        super.onStop()
-        saveImageUrls()
-    }
-
     private fun saveImageUrls() {
         with(fetchSharedPref().edit()) {
-            putString(PREF_IMAGE_DATA, (viewAdapter as MainRecyclerViewAdapter).getData().toString())
+            putString(IMAGE_DATA, (viewAdapter as MainRecyclerViewAdapter).getData().toString())
             apply()
         }
     }
@@ -99,15 +84,20 @@ class MainActivity : AppCompatActivity(), MainContract.View, MainRecyclerViewAda
         return super.onOptionsItemSelected(item)
     }
 
+    override fun addImage() {
+        val intent = Intent(this, AddImageActivity::class.java)
+        startActivityForResult(intent, ADD_IMAGE_REQUEST_CODE)
+    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
         if (resultCode == Activity.RESULT_OK) {
             when (requestCode) {
                 ADD_IMAGE_REQUEST_CODE -> {
-                    val imageUrl = data?.getStringExtra(EXTRA_IMAGE_URL)
-                    val imageTitle = data?.getStringExtra(EXTRA_IMAGE_TITLE)
-                    val imageDate = data?.getStringExtra(EXTRA_IMAGE_DATE)
+                    val imageUrl = data?.getStringExtra(IMAGE_URL)
+                    val imageTitle = data?.getStringExtra(IMAGE_TITLE)
+                    val imageDate = data?.getStringExtra(IMAGE_DATE)
 
                     if (imageUrl != null && imageTitle != null && imageDate != null) {
                         presenter.generateTagsAndAddImage(imageUrl, imageTitle, imageDate)
@@ -124,11 +114,6 @@ class MainActivity : AppCompatActivity(), MainContract.View, MainRecyclerViewAda
         adapter.addImage(url, title, date, tags)
     }
 
-    override fun addImage() {
-        val intent = Intent(this, AddImageActivity::class.java)
-        startActivityForResult(intent, ADD_IMAGE_REQUEST_CODE)
-    }
-
     override fun fetchSharedPref(): SharedPreferences {
         return getSharedPreferences(
             PREF_IMAGES,
@@ -140,8 +125,8 @@ class MainActivity : AppCompatActivity(), MainContract.View, MainRecyclerViewAda
         val adapter = viewAdapter as MainRecyclerViewAdapter
 
         val intent = Intent(this, ImageActivity::class.java)
-        intent.putExtra(INTENT_IMAGE_DATA, adapter.getData().toString())
-        intent.putExtra(INTENT_IMAGE_POSITION, position)
+        intent.putExtra(IMAGE_DATA, adapter.getData().toString())
+        intent.putExtra(IMAGE_POSITION, position)
         startActivity(intent)
     }
 }

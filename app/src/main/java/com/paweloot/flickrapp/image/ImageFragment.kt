@@ -1,21 +1,16 @@
 package com.paweloot.flickrapp.image
 
-import android.net.Uri
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
 import com.paweloot.flickrapp.R
-import com.paweloot.flickrapp.main.MainActivity
-import com.paweloot.flickrapp.main.MainActivity.Companion.INTENT_IMAGE_DATA
-import com.paweloot.flickrapp.main.MainActivity.Companion.INTENT_IMAGE_POSITION
-import com.paweloot.flickrapp.main.MainRecyclerViewAdapter
-import com.paweloot.flickrapp.main.MainRecyclerViewAdapter.Companion.JSON_KEY_IMAGE_URL
+import com.paweloot.flickrapp.common.IMAGE_DATA
+import com.paweloot.flickrapp.common.IMAGE_POSITION
+import com.paweloot.flickrapp.common.IMAGE_URL
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.fragment_image.*
 import kotlinx.android.synthetic.main.fragment_image.view.*
 import org.json.JSONArray
 
@@ -27,12 +22,12 @@ class ImageFragment : Fragment() {
     ): View? {
         val view: View = inflater.inflate(R.layout.fragment_image, container, false)
 
-        val imageDataRaw = activity?.intent?.getStringExtra(INTENT_IMAGE_DATA)
+        val imageDataRaw = activity?.intent?.getStringExtra(IMAGE_DATA)
         val imageData = JSONArray(imageDataRaw)
-        val position = activity?.intent?.getIntExtra(INTENT_IMAGE_POSITION, 0)
+        val position = activity?.intent?.getIntExtra(IMAGE_POSITION, 0)
 
         if (position != null) {
-            val currImageUrl = imageData.getJSONObject(position).getString(JSON_KEY_IMAGE_URL)
+            val currImageUrl = imageData.getJSONObject(position).getString(IMAGE_URL)
             Picasso.get().load(currImageUrl).into(view.main_image)
         }
 

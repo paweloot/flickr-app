@@ -1,12 +1,11 @@
 package com.paweloot.flickrapp.main
 
-import android.content.Context
 import androidx.recyclerview.widget.ItemTouchHelper
-import androidx.recyclerview.widget.ItemTouchHelper.*
+import androidx.recyclerview.widget.ItemTouchHelper.END
+import androidx.recyclerview.widget.ItemTouchHelper.START
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.activity_main.*
 
-abstract class MainSwipeToDeleteCallback(context: Context) :
+abstract class MainSwipeToDeleteCallback:
     ItemTouchHelper.SimpleCallback(0, START or END) {
 
     override fun onMove(

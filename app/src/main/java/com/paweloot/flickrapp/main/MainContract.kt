@@ -6,7 +6,6 @@ import org.json.JSONArray
 interface MainContract {
     interface Presenter {
         fun onAddImageButtonClick()
-
         fun fetchImageUrls(sharedPref: SharedPreferences): JSONArray
         fun generateTagsAndAddImage(url: String, title: String, date: String)
     }

@@ -6,6 +6,7 @@ import android.graphics.drawable.Drawable
 import android.util.Log
 import com.google.firebase.ml.vision.FirebaseVision
 import com.google.firebase.ml.vision.common.FirebaseVisionImage
+import com.paweloot.flickrapp.common.IMAGE_DATA
 import com.squareup.picasso.Picasso
 import com.squareup.picasso.Target
 import org.json.JSONArray
@@ -13,12 +14,16 @@ import java.lang.Exception
 
 class MainPresenter(private val view: MainContract.View) : MainContract.Presenter {
 
+    companion object {
+        const val TAG = "ImageLabeler"
+    }
+
     override fun onAddImageButtonClick() {
         view.addImage()
     }
 
     override fun fetchImageUrls(sharedPref: SharedPreferences): JSONArray {
-        val rawImageData = sharedPref.getString(MainActivity.PREF_IMAGE_DATA, null)
+        val rawImageData = sharedPref.getString(IMAGE_DATA, null)
 
         return if (rawImageData == null) JSONArray()
         else JSONArray(rawImageData)
@@ -39,7 +44,7 @@ class MainPresenter(private val view: MainContract.View) : MainContract.Presente
 
                             view.addImageToAdapter(url, title, date, joinedTags)
                         }
-                        .addOnFailureListener { e -> Log.wtf("ImageLabeler", e.message) }
+                        .addOnFailureListener { e -> Log.wtf(TAG, e.message) }
                 }
             }
 

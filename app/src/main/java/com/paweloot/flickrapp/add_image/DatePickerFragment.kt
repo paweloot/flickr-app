@@ -3,6 +3,7 @@ package com.paweloot.flickrapp.add_image
 
 import android.app.DatePickerDialog
 import android.app.Dialog
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -22,6 +23,6 @@ class DatePickerFragment(private val onDateSetListener: DatePickerDialog.OnDateS
         val month = c.get(Calendar.MONTH)
         val day = c.get(Calendar.DAY_OF_MONTH)
 
-        return DatePickerDialog(activity, onDateSetListener, year, month, day)
+        return DatePickerDialog(activity as Context, onDateSetListener, year, month, day)
     }
 }
