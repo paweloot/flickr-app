@@ -37,12 +37,12 @@ class ImageFragment : Fragment() {
 
         if (position != null) {
             val currImageUrl = imageData.getJSONObject(position).getString(IMAGE_URL)
-            Picasso.get().load(currImageUrl).into(view.main_image)
+            Picasso.get().load(currImageUrl).into(view.image_fullscreen)
         }
     }
 
     private fun setOnClickNavigation(view: View) {
-        view.main_image.setOnClickListener(
+        view.image_fullscreen.setOnClickListener(
             Navigation.createNavigateOnClickListener(R.id.action_imageFragment_to_imageDetailsFragment)
         )
     }
