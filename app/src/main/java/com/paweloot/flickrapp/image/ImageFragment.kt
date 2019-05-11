@@ -22,18 +22,28 @@ class ImageFragment : Fragment() {
     ): View? {
         val view: View = inflater.inflate(R.layout.fragment_image, container, false)
 
-        val imageDataRaw = activity?.intent?.getStringExtra(IMAGE_DATA)
+        loadImageIntoView(view)
+        setOnClickNavigation(view)
+
+        return view
+    }
+
+    private fun loadImageIntoView(view: View) {
+        val intent = activity?.intent
+
+        val imageDataRaw = intent?.getStringExtra(IMAGE_DATA)
         val imageData = JSONArray(imageDataRaw)
-        val position = activity?.intent?.getIntExtra(IMAGE_POSITION, 0)
+        val position = intent?.getIntExtra(IMAGE_POSITION, 0)
 
         if (position != null) {
             val currImageUrl = imageData.getJSONObject(position).getString(IMAGE_URL)
             Picasso.get().load(currImageUrl).into(view.main_image)
         }
+    }
 
+    private fun setOnClickNavigation(view: View) {
         view.main_image.setOnClickListener(
             Navigation.createNavigateOnClickListener(R.id.action_imageFragment_to_imageDetailsFragment)
         )
-        return view
     }
 }

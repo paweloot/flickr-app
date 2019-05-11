@@ -18,25 +18,33 @@ class ImageInfoFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_image_info, container, false)
-        displayImageInfo(view)
+
+        loadImageInfo(view)
 
         return view
     }
 
-    private fun displayImageInfo(view: View) {
-        val image = getCurrentImageData()
-
-        view.text_image_info_title.text = image.getString(IMAGE_TITLE)
-        view.text_image_info_date.text = image.getString(IMAGE_DATE)
-        view.text_image_info_tags.text = image.getString(IMAGE_TAGS)
-        view.text_image_info_url.text = image.getString(IMAGE_URL)
+    private fun loadImageInfo(view: View) {
+        getCurrentImageData().apply {
+            view.text_image_info_title.text = getString(IMAGE_TITLE)
+            view.text_image_info_date.text = getString(IMAGE_DATE)
+            view.text_image_info_tags.text = getString(IMAGE_TAGS)
+            view.text_image_info_url.text = getString(IMAGE_URL)
+        }
     }
 
     private fun getCurrentImageData(): JSONObject {
-        val imageDataRaw = activity?.intent?.getStringExtra(IMAGE_DATA)
-        val imageData = JSONArray(imageDataRaw)
-        val position = activity?.intent?.getIntExtra(IMAGE_POSITION, 0) ?: 0
+        val intent = activity?.intent
 
-        return imageData.getJSONObject(position)
+        val imageDataRaw = intent?.getStringExtra(IMAGE_DATA)
+        val imageData = JSONArray(imageDataRaw)
+        val position = intent?.getIntExtra(IMAGE_POSITION, 0)
+
+
+        return if (position != null) {
+            imageData.getJSONObject(position)
+        } else {
+            JSONObject()
+        }
     }
 }
