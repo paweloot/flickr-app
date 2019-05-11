@@ -1,24 +1,16 @@
 package com.paweloot.flickrapp.main
 
-import android.graphics.Bitmap
-import android.graphics.drawable.Drawable
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
-import com.google.firebase.ml.vision.FirebaseVision
-import com.google.firebase.ml.vision.common.FirebaseVisionImage
 import com.paweloot.flickrapp.R
 import com.squareup.picasso.Picasso
-import com.squareup.picasso.Target
 import kotlinx.android.synthetic.main.recyclerview_image_item.view.*
 import org.json.JSONArray
 import org.json.JSONObject
-import java.lang.Exception
 
-class MainRecyclerViewAdapter(private val data: JSONArray, val onImageClickListener: OnImageClickListener) :
+class MainRecyclerViewAdapter(private val data: JSONArray, private val onImageClickListener: OnImageClickListener) :
     RecyclerView.Adapter<MainRecyclerViewAdapter.PhotoViewHolder>() {
 
     companion object {
@@ -28,7 +20,7 @@ class MainRecyclerViewAdapter(private val data: JSONArray, val onImageClickListe
         const val JSON_KEY_IMAGE_TAGS = "TAGS"
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainRecyclerViewAdapter.PhotoViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PhotoViewHolder {
         val inflatedView = LayoutInflater.from(parent.context)
             .inflate(R.layout.recyclerview_image_item, parent, false) as View
 
@@ -38,6 +30,7 @@ class MainRecyclerViewAdapter(private val data: JSONArray, val onImageClickListe
     override fun onBindViewHolder(holder: PhotoViewHolder, position: Int) {
         val image = data.getJSONObject(position)
 
+        holder.view.tag = data.get(position)
         holder.apply {
             setURL(image.getString(JSON_KEY_IMAGE_URL))
             setTitle(image.getString(JSON_KEY_IMAGE_TITLE))
@@ -67,10 +60,6 @@ class MainRecyclerViewAdapter(private val data: JSONArray, val onImageClickListe
         notifyItemRemoved(position)
     }
 
-    fun getImageUrlAt(position: Int): String {
-        return data.getJSONObject(position).getString(JSON_KEY_IMAGE_URL)
-    }
-
     fun getData(): JSONArray = data
 
     class PhotoViewHolder(val view: View, private val onImageClickListener: OnImageClickListener) :
@@ -81,18 +70,22 @@ class MainRecyclerViewAdapter(private val data: JSONArray, val onImageClickListe
         }
 
         fun setURL(url: String) {
-            Picasso.get().load(url).into(object : Target {
-                override fun onBitmapLoaded(bitmap: Bitmap?, from: Picasso.LoadedFrom?) {
-                    if (bitmap != null) {
-                        view.image_main.setImageBitmap(bitmap)
-                    }
-                }
-
-                override fun onPrepareLoad(placeHolderDrawable: Drawable?) {}
-                override fun onBitmapFailed(e: Exception?, errorDrawable: Drawable?) {
-                    Toast.makeText(view.context, R.string.error_loading_image, Toast.LENGTH_SHORT).show()
-                }
-            })
+            Picasso.get().load(url).into(view.image_main)
+//            Picasso.get().load(url).placeholder(R.drawable.ic_action_emo_err).into(object : Target {
+//                override fun onBitmapLoaded(bitmap: Bitmap?, from: Picasso.LoadedFrom?) {
+//                    if (bitmap != null) {
+//                        view.image_main.setImageBitmap(bitmap)
+//                        Toast.makeText(view.context, "Image loaded", Toast.LENGTH_SHORT).show()
+//                    } else {
+//                        view.image_main.setImageDrawable(view.context.getDrawable(R.drawable.ic_action_emo_err))
+//                    }
+//                }
+//
+//                override fun onPrepareLoad(placeHolderDrawable: Drawable?) {}
+//                override fun onBitmapFailed(e: Exception?, errorDrawable: Drawable?) {
+//                    Toast.makeText(view.context, R.string.error_loading_image, Toast.LENGTH_SHORT).show()
+//                }
+//            })
         }
 
         fun setTitle(title: String) {
@@ -104,14 +97,22 @@ class MainRecyclerViewAdapter(private val data: JSONArray, val onImageClickListe
         }
 
         fun setTags(tags: String) {
-            val firstThreeTags = tags.substring(1).split(" #").take(3)
-            val tagsJoined = "#${firstThreeTags.joinToString(" #")}"
+            val threeTags = splitTagsToList(tags).take(3)
+            val tagsJoined = joinTags(threeTags)
 
             view.text_image_tags.text = tagsJoined
         }
 
         override fun onClick(view: View?) {
             onImageClickListener.onImageClick(adapterPosition)
+        }
+
+        private fun splitTagsToList(tags: String): List<String> {
+            return tags.substring(1).split(" #")
+        }
+
+        private fun joinTags(tags: List<String>): String {
+            return "#${tags.joinToString(" #")}"
         }
     }
 

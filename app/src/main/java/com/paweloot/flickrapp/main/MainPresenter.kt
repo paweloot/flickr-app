@@ -48,10 +48,4 @@ class MainPresenter(private val view: MainContract.View) : MainContract.Presente
         })
 
     }
-
-    override fun pickSimilarImages(n: Int, data: JSONArray) {
-        //TODO
-    }
-
-
 }

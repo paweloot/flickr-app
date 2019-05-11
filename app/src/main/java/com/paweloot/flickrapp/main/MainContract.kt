@@ -9,7 +9,6 @@ interface MainContract {
 
         fun fetchImageUrls(sharedPref: SharedPreferences): JSONArray
         fun generateTagsAndAddImage(url: String, title: String, date: String)
-        fun pickSimilarImages(n: Int, data: JSONArray)
     }
 
     interface View {

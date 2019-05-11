@@ -138,9 +138,6 @@ class MainActivity : AppCompatActivity(), MainContract.View, MainRecyclerViewAda
 
     override fun onImageClick(position: Int) {
         val adapter = viewAdapter as MainRecyclerViewAdapter
-        val imageUrl = adapter.getImageUrlAt(position)
-
-        val similarImages = presenter.pickSimilarImages(6, adapter.getData())
 
         val intent = Intent(this, ImageActivity::class.java)
         intent.putExtra(INTENT_IMAGE_DATA, adapter.getData().toString())

@@ -6,7 +6,7 @@ import org.json.JSONArray
 class SimilarImagesPresenter(private val view: SimilarImagesContract.View) : SimilarImagesContract.Presenter {
 
     companion object {
-        const val MIN_THE_SAME_TAGS = 2
+        const val MIN_THE_SAME_TAGS = 3
     }
 
     override fun pickSimilarImages(n: Int, imageData: JSONArray, currentPosition: Int) {
