@@ -41,6 +41,27 @@ class MainActivity : AppCompatActivity(), MainContract.View, MainRecyclerViewAda
         image_recycler_view.adapter = viewAdapter
 
         addDeleteOnSwipe()
+        addSampleImages()
+    }
+
+    private fun addSampleImages() {
+        val date = "16/5/2019"
+        presenter.generateTagsAndAddImage("https://images.unsplash.com/photo-1489278353717-f64c6ee8a4d2?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60",
+             "One", date)
+        presenter.generateTagsAndAddImage("https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60",
+            "Two", date)
+        presenter.generateTagsAndAddImage("https://images.unsplash.com/photo-1521225099409-8e1efc95321d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60",
+            "Three", date)
+        presenter.generateTagsAndAddImage("https://images.unsplash.com/photo-1492633423870-43d1cd2775eb?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60",
+            "Cuatro", date)
+        presenter.generateTagsAndAddImage("https://images.unsplash.com/photo-1544507888-56d73eb6046e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60",
+            "Cinco", date)
+        presenter.generateTagsAndAddImage("https://images.unsplash.com/photo-1535982606227-475c9bf94018?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60",
+            "Seis", date)
+        presenter.generateTagsAndAddImage("https://images.unsplash.com/photo-1508280756091-9bdd7ef1f463?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60",
+            "Sept", date)
+        presenter.generateTagsAndAddImage("https://images.unsplash.com/photo-1512485694743-9c9538b4e6e0?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60",
+            "Huit", date)
     }
 
     override fun onStop() {

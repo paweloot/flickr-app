@@ -33,7 +33,7 @@ class SimilarImagesPresenter(private val view: SimilarImagesContract.View) : Sim
         return ArrayList<String>(tags.substring(1).split(" #"))
     }
 
-    fun hasAtLeastTheSameNTags(n: Int, tags: List<String>, currentTags: List<String>): Boolean {
+    private fun hasAtLeastTheSameNTags(n: Int, tags: List<String>, currentTags: List<String>): Boolean {
         return tags.count { tag -> currentTags.contains(tag) } >= n
     }
 }
