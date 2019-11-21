@@ -17,18 +17,18 @@
         <activity
                 android:name=".image.ImageActivity"
                 android:configChanges="orientation|keyboardHidden|screenSize"
-                android:parentActivityName=".main.MainActivity"
+                android:parentActivityName=".MainActivity"
                 android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
-                    android:value="com.paweloot.flickrapp.main.MainActivity"/>
+                    android:value="com.paweloot.flickrapp.MainActivity"/>
         </activity>
 
         <meta-data
                 android:name="com.google.firebase.ml.vision.DEPENDENCIES"
                 android:value="label"/>
 
-        <activity android:name=".main.MainActivity">
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -37,7 +37,7 @@
         </activity>
 
         <activity android:name=".add_image.AddImageActivity"
-                  android:parentActivityName=".main.MainActivity">
+                  android:parentActivityName=".MainActivity">
             <intent-filter>
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>

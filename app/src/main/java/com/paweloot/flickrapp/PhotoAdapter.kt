@@ -1,10 +1,9 @@
-package com.paweloot.flickrapp.main
+package com.paweloot.flickrapp
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.paweloot.flickrapp.R
 import com.paweloot.flickrapp.api.GalleryItem
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.list_item_gallery.view.*
@@ -38,21 +37,7 @@ class PhotoAdapter(private val galleryItems: List<GalleryItem>) :
 
     override fun getItemCount() = galleryItems.size
 
-//    private fun firstNTags(n: Int, rawTags: String): String {
-//        val nTags = splitTagsToList(rawTags).take(n)
-//
-//        return joinTags(nTags)
-//    }
-//
-//    private fun splitTagsToList(tags: String): List<String> {
-//        return tags.substring(1).split(" #")
-//    }
-//
-//    private fun joinTags(tags: List<String>): String {
-//        return "#${tags.joinToString(" #")}"
-//    }
-
-    class PhotoHolder(val view: View) : RecyclerView.ViewHolder(view) {
+    class PhotoHolder(private val view: View) : RecyclerView.ViewHolder(view) {
 
         fun bindUrl(url: String) {
             Picasso.get().load(url).into(view.image_main)
