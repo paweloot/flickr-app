@@ -2,6 +2,7 @@ package com.paweloot.flickrapp
 
 import android.os.Bundle
 import android.view.*
+import android.widget.ProgressBar
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -13,6 +14,7 @@ class GalleryFragment : Fragment() {
 
     private lateinit var galleryViewModel: GalleryViewModel
     private lateinit var photoRecyclerView: RecyclerView
+    private lateinit var progressBar: ProgressBar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,6 +35,8 @@ class GalleryFragment : Fragment() {
         )
 
         photoRecyclerView = view.findViewById(R.id.photo_recycler_view)
+        progressBar = view.findViewById(R.id.progress_bar)
+
         photoRecyclerView.layoutManager = LinearLayoutManager(context)
 
         return view
@@ -41,11 +45,14 @@ class GalleryFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        showProgressBar()
+
         galleryViewModel.galleryItemLiveData.observe(
             this,
             Observer { galleryItems ->
                 photoRecyclerView.adapter =
                     PhotoAdapter(galleryItems)
+                showGallery()
             }
         )
     }
@@ -60,6 +67,8 @@ class GalleryFragment : Fragment() {
         searchView.apply {
             setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                 override fun onQueryTextSubmit(query: String): Boolean {
+                    showProgressBar()
+                    clearFocus()
                     galleryViewModel.fetchPhotos(query)
                     return true
                 }
@@ -74,11 +83,22 @@ class GalleryFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.menu_item_clear -> {
+                showProgressBar()
                 galleryViewModel.fetchPhotos("")
                 true
             }
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    private fun showProgressBar() {
+        photoRecyclerView.visibility = View.GONE
+        progressBar.visibility = View.VISIBLE
+    }
+
+    private fun showGallery() {
+        photoRecyclerView.visibility = View.VISIBLE
+        progressBar.visibility = View.GONE
     }
 
     companion object {
