@@ -1,12 +1,8 @@
-package com.paweloot.flickrgallery.api
+package com.paweloot.flickrapp.api
 
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.util.Log
-import androidx.annotation.WorkerThread
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.paweloot.flickrgallery.GalleryItem
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -53,14 +49,5 @@ class FlickrFetcher {
         })
 
         return responseLiveData
-    }
-
-    @WorkerThread
-    fun fetchPhotoUrl(url: String): Bitmap? {
-        val response = flickrApi.fetchUrlBytes(url).execute()
-
-        val bitmap = response.body()?.byteStream()?.use(BitmapFactory::decodeStream)
-
-        return bitmap
     }
 }
