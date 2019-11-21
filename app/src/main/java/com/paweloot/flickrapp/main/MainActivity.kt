@@ -1,8 +1,6 @@
 package com.paweloot.flickrapp.main
 
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -23,7 +21,7 @@ class MainActivity : AppCompatActivity() {
         mainRecyclerViewViewModel =
             ViewModelProviders.of(this).get(MainRecyclerViewViewModel::class.java)
 
-        photoRecyclerView = findViewById(R.id.image_recycler_view)
+        photoRecyclerView = findViewById(R.id.photo_recycler_view)
 
         photoRecyclerView.layoutManager = LinearLayoutManager(this)
         mainRecyclerViewViewModel.galleryItemLiveData.observe(
@@ -33,27 +31,4 @@ class MainActivity : AppCompatActivity() {
             }
         )
     }
-
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.menu_main, menu)
-        supportActionBar?.title = getString(R.string.app_name)
-
-        return super.onCreateOptionsMenu(menu)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        when (item?.itemId) {
-        }
-
-        return super.onOptionsItemSelected(item)
-    }
-
-//    override fun onImageClick(position: Int) {
-//        val adapter = viewAdapter as MainRecyclerViewAdapter
-//
-//        val intent = Intent(this, ImageActivity::class.java)
-//        intent.putExtra(IMAGE_DATA, adapter.getData().toString())
-//        intent.putExtra(IMAGE_POSITION, position)
-//        startActivity(intent)
-//    }
 }
