@@ -58,7 +58,7 @@ class GalleryFragment : Fragment() {
         val searchView = searchItem.actionView as SearchView
 
         searchView.apply {
-            setOnQueryTextListener(object: SearchView.OnQueryTextListener {
+            setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                 override fun onQueryTextSubmit(query: String): Boolean {
                     galleryViewModel.fetchPhotos(query)
                     return true
@@ -68,6 +68,16 @@ class GalleryFragment : Fragment() {
                     return false
                 }
             })
+        }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.menu_item_clear -> {
+                galleryViewModel.fetchPhotos("")
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
         }
     }
 

@@ -1,13 +1,14 @@
 package com.paweloot.flickrapp
 
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
-import androidx.lifecycle.ViewModel
 import com.paweloot.flickrapp.api.FlickrFetcher
 import com.paweloot.flickrapp.api.GalleryItem
 
-class GalleryViewModel : ViewModel() {
+class GalleryViewModel(private val app: Application) : AndroidViewModel(app) {
 
     val galleryItemLiveData: LiveData<List<GalleryItem>>
 
@@ -15,14 +16,19 @@ class GalleryViewModel : ViewModel() {
     private val mutableSearchTerm = MutableLiveData<String>()
 
     init {
-        mutableSearchTerm.value = "planets"
+        mutableSearchTerm.value = QueryPreferences.getStoredQuery(app)
 
         galleryItemLiveData = Transformations.switchMap(mutableSearchTerm) { searchTerm ->
-            flickrFetcher.searchPhotos(searchTerm)
+            if (searchTerm.isBlank()) {
+                flickrFetcher.fetchPhotos()
+            } else {
+                flickrFetcher.searchPhotos(searchTerm)
+            }
         }
     }
 
     fun fetchPhotos(query: String) {
+        QueryPreferences.setStoredQuery(app, query)
         mutableSearchTerm.value = query
     }
 }
