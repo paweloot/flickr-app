@@ -10,7 +10,5 @@ class ImageActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_image)
-
-        textView2.text = intent.getStringExtra("URL")
     }
 }

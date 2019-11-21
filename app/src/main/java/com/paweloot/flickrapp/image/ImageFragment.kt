@@ -1,32 +1,49 @@
 package com.paweloot.flickrapp.image
 
-import android.content.Context
-import android.net.Uri
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.navigation.Navigation
 import com.paweloot.flickrapp.R
-import kotlinx.android.synthetic.main.fragment_image.*
+import com.paweloot.flickrapp.common.IMAGE_DATA
+import com.paweloot.flickrapp.common.IMAGE_POSITION
+import com.paweloot.flickrapp.common.IMAGE_URL
+import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.fragment_image.view.*
+import org.json.JSONArray
 
 class ImageFragment : Fragment() {
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        main_image
-        return inflater.inflate(R.layout.fragment_image, container, false)
+        val view: View = inflater.inflate(R.layout.fragment_image, container, false)
+
+        loadImageIntoView(view)
+        setOnClickNavigation(view)
+
+        return view
     }
 
-    interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        fun onFragmentInteraction(uri: Uri)
+    private fun loadImageIntoView(view: View) {
+        val intent = activity?.intent
+
+        val imageDataRaw = intent?.getStringExtra(IMAGE_DATA)
+        val imageData = JSONArray(imageDataRaw)
+        val position = intent?.getIntExtra(IMAGE_POSITION, 0)
+
+        if (position != null) {
+            val currImageUrl = imageData.getJSONObject(position).getString(IMAGE_URL)
+            Picasso.get().load(currImageUrl).into(view.image_fullscreen)
+        }
+    }
+
+    private fun setOnClickNavigation(view: View) {
+        view.image_fullscreen.setOnClickListener(
+            Navigation.createNavigateOnClickListener(R.id.action_imageFragment_to_imageDetailsFragment)
+        )
     }
 }

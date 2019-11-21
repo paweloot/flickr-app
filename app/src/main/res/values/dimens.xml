@@ -1,15 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Font sizes -->
-    <dimen name="fkr_font_huge">48sp</dimen>
-    <dimen name="fkr_font_larger">28sp</dimen>
-    <dimen name="fkr_font_large">18sp</dimen>
-    <dimen name="fkr_font_normal">14sp</dimen>
-    <dimen name="fkr_font_small">12sp</dimen>
-
-    <dimen name="fkr_font_title">20sp</dimen>
-    <dimen name="fkr_font_subhead">16sp</dimen>
-
     <!-- Typical spacing -->
     <dimen name="fkr_layout_margin_top">8dp</dimen>
     <dimen name="fkr_layout_margin_bottom">8dp</dimen>
@@ -23,5 +13,4 @@
 
     <!-- Other elements sizes -->
     <dimen name="fkr_list_divider_height">1dp</dimen>
-    <dimen name="fab_margin">16dp</dimen>
 </resources>

@@ -1,33 +1,23 @@
 package com.paweloot.flickrapp.main
 
-import android.graphics.Bitmap
-import android.graphics.drawable.Drawable
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
-import com.google.firebase.ml.vision.FirebaseVision
-import com.google.firebase.ml.vision.common.FirebaseVisionImage
 import com.paweloot.flickrapp.R
+import com.paweloot.flickrapp.common.IMAGE_DATE
+import com.paweloot.flickrapp.common.IMAGE_TAGS
+import com.paweloot.flickrapp.common.IMAGE_TITLE
+import com.paweloot.flickrapp.common.IMAGE_URL
 import com.squareup.picasso.Picasso
-import com.squareup.picasso.Target
 import kotlinx.android.synthetic.main.recyclerview_image_item.view.*
 import org.json.JSONArray
 import org.json.JSONObject
-import java.lang.Exception
 
-class MainRecyclerViewAdapter(private val data: JSONArray, val onImageClickListener: OnImageClickListener) :
+class MainRecyclerViewAdapter(private val data: JSONArray, private val onImageClickListener: OnImageClickListener) :
     RecyclerView.Adapter<MainRecyclerViewAdapter.PhotoViewHolder>() {
 
-    companion object {
-        const val KEY_IMAGE_URL = "URL"
-        const val KEY_IMAGE_TITLE = "TITLE"
-        const val KEY_IMAGE_DATE = "DATE"
-    }
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainRecyclerViewAdapter.PhotoViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PhotoViewHolder {
         val inflatedView = LayoutInflater.from(parent.context)
             .inflate(R.layout.recyclerview_image_item, parent, false) as View
 
@@ -38,24 +28,40 @@ class MainRecyclerViewAdapter(private val data: JSONArray, val onImageClickListe
         val image = data.getJSONObject(position)
 
         holder.apply {
-            setURL(image.getString(KEY_IMAGE_URL))
-            setTitle(image.getString(KEY_IMAGE_TITLE))
-            setDate(image.getString(KEY_IMAGE_DATE))
+            setURL(image.getString(IMAGE_URL))
+            setTitle(image.getString(IMAGE_TITLE))
+            setDate(image.getString(IMAGE_DATE))
+            setTags(firstNTags(3, image.getString(IMAGE_TAGS)))
         }
+    }
+
+    private fun firstNTags(n: Int, rawTags: String): String {
+        val nTags = splitTagsToList(rawTags).take(n)
+
+        return joinTags(nTags)
+    }
+
+    private fun splitTagsToList(tags: String): List<String> {
+        return tags.substring(1).split(" #")
+    }
+
+    private fun joinTags(tags: List<String>): String {
+        return "#${tags.joinToString(" #")}"
     }
 
     override fun getItemCount() = data.length()
 
-    fun addImage(url: String, title: String, date: String) {
-        data.put(createImageJSONObject(url, title, date))
+    fun addImage(url: String, title: String, date: String, tags: String) {
+        data.put(createImageJSONObject(url, title, date, tags))
         notifyDataSetChanged()
     }
 
-    private fun createImageJSONObject(url: String, title: String, date: String): JSONObject {
+    private fun createImageJSONObject(url: String, title: String, date: String, tags: String): JSONObject {
         return JSONObject().apply {
-            put(KEY_IMAGE_URL, url)
-            put(KEY_IMAGE_TITLE, title)
-            put(KEY_IMAGE_DATE, date)
+            put(IMAGE_URL, url)
+            put(IMAGE_TITLE, title)
+            put(IMAGE_DATE, date)
+            put(IMAGE_TAGS, tags)
         }
     }
 
@@ -64,13 +70,9 @@ class MainRecyclerViewAdapter(private val data: JSONArray, val onImageClickListe
         notifyItemRemoved(position)
     }
 
-    fun getImageUrlAt(position: Int): String {
-        return data.getJSONObject(position).getString(KEY_IMAGE_URL)
-    }
-
     fun getData(): JSONArray = data
 
-    class PhotoViewHolder(val view: View, val onImageClickListener: OnImageClickListener) :
+    class PhotoViewHolder(val view: View, private val onImageClickListener: OnImageClickListener) :
         RecyclerView.ViewHolder(view), View.OnClickListener {
 
         init {
@@ -78,34 +80,7 @@ class MainRecyclerViewAdapter(private val data: JSONArray, val onImageClickListe
         }
 
         fun setURL(url: String) {
-            Picasso.get().load(url).into(object : Target {
-                override fun onBitmapLoaded(bitmap: Bitmap?, from: Picasso.LoadedFrom?) {
-                    if (bitmap != null) {
-                        view.image_main.setImageBitmap(bitmap)
-
-                        val vision = FirebaseVisionImage.fromBitmap(bitmap)
-                        val labeler = FirebaseVision.getInstance().onDeviceImageLabeler
-                        labeler.processImage(vision)
-                            .addOnSuccessListener { labels ->
-                                setTags(
-                                    "#${labels.take(3)
-                                        .joinToString(" #") {
-                                            it.text.toLowerCase()
-                                        }}"
-                                )
-                            }
-
-                            .addOnFailureListener { e ->
-                                Log.wtf("ImageLabeler", e.message)
-                            }
-                    }
-                }
-
-                override fun onPrepareLoad(placeHolderDrawable: Drawable?) {}
-                override fun onBitmapFailed(e: Exception?, errorDrawable: Drawable?) {
-                    Toast.makeText(view.context, R.string.error_loading_image, Toast.LENGTH_SHORT).show()
-                }
-            })
+            Picasso.get().load(url).into(view.image_main)
         }
 
         fun setTitle(title: String) {

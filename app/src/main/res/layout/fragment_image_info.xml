@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".image.ImageInfoFragment"
+>
+    <TextView
+            android:id="@+id/text_image_info_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/fkr_spacing_small"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="@+id/text_image_info_title"
+            app:layout_constraintTop_toTopOf="@+id/text_image_info_title"
+            tools:text="04/09/2019"
+            style="@style/TextAppearance.AppCompat.Subhead"
+    />
+    <View
+            android:id="@+id/info_divider"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/fkr_list_divider_height"
+            android:background="?android:attr/listDivider"
+            android:layout_marginStart="@dimen/fkr_spacing_small"
+            android:layout_marginEnd="@dimen/fkr_spacing_small"
+            android:layout_marginBottom="@dimen/fkr_spacing_small"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/text_image_info_tags"
+    />
+    <TextView
+            android:id="@+id/text_image_info_tags"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/fkr_spacing_small"
+            android:layout_marginStart="@dimen/fkr_spacing_small"
+            android:layout_marginEnd="@dimen/fkr_spacing_small"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/text_image_info_url"
+            tools:text="#paris #pigeon #amour #eiffeltower"
+            style="@style/TextAppearance.AppCompat.Body1"
+    />
+    <TextView
+            android:id="@+id/text_image_info_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/fkr_spacing_small"
+            android:layout_marginTop="@dimen/fkr_spacing_normal"
+            android:layout_marginEnd="@dimen/fkr_spacing_small"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/text_image_info_date"
+            app:layout_constraintBottom_toTopOf="@+id/info_divider"
+            app:layout_constraintVertical_bias="0.0"
+            tools:text="Dans la ville d\'amour"
+            style="@style/TextAppearance.AppCompat.Title"
+    />
+    <TextView
+            android:id="@+id/text_image_info_url"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/fkr_spacing_small"
+            android:layout_marginEnd="@dimen/fkr_spacing_small"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            tools:text="https://images.unsplash.com/photo-1557428894-56bcc97113fe?ixlib=rb-1.2.1auto=formatfit=cropw=676q=80"
+            style="@style/TextAppearance.AppCompat.Caption"
+    />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
