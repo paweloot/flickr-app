@@ -77,6 +77,10 @@ class GalleryFragment : Fragment() {
                     return false
                 }
             })
+
+            setOnSearchClickListener {
+                searchView.setQuery(galleryViewModel.searchTerm, false)
+            }
         }
     }
 

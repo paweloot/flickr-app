@@ -11,6 +11,8 @@ import com.paweloot.flickrapp.api.GalleryItem
 class GalleryViewModel(private val app: Application) : AndroidViewModel(app) {
 
     val galleryItemLiveData: LiveData<List<GalleryItem>>
+    val searchTerm: String
+        get() = mutableSearchTerm.value ?: ""
 
     private val flickrFetcher = FlickrFetcher()
     private val mutableSearchTerm = MutableLiveData<String>()
