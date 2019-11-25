@@ -15,8 +15,10 @@
     <string name="similar_image_description">Similar image</string>
     <string name="loaded_image_description">Loaded image</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="clear_search">Clear Search</string>
     <string name="search">Search</string>
+
+    <string name="notification_channel_name">FlickrFetcher</string>
+    <string name="new_pictures_title">New FlickrApp Pictures</string>
+    <string name="new_pictures_text">You have new pictures in PhotoGallery.</string>
 </resources>
